@@ -7,6 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import io.github.revenge.xposed.api.DexFinder
@@ -21,15 +23,17 @@ import java.util.concurrent.ConcurrentHashMap
 
 private const val DRAWEE_SPAN_TEXT_VIEW = "com.facebook.drawee.span.SimpleDraweeSpanTextView"
 private const val MESSAGE = "com.discord.chat.bridge.Message"
+private const val MESSAGE_VIEW = "com.discord.chat.presentation.message.MessageView"
 
 private const val GREYED_ALPHA = 0.5f
 
 internal class LoggerHooks(dexFinder: DexFinder) {
     private val dimmed = ConcurrentHashMap.newKeySet<String>()
 
-    // Main thread only
-    private val boundAttachments = WeakHashMap<View, String>()
+    // Main thread only. Views showing an attachment, or a message's avatar
+    private val bound = WeakHashMap<View, String>()
     private val greyed = Collections.newSetFromMap(WeakHashMap<View, Boolean>())
+    private var viewIds: ViewIds? = null
 
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -42,6 +46,10 @@ internal class LoggerHooks(dexFinder: DexFinder) {
     private val accessoryClass: Class<*>
     private val itemViewField: Field
     private var attachmentIdField: Field? = null
+
+    private val messageClass = dexFinder.classLoader.loadClass(MESSAGE)
+    private val messageIdField = messageClass.getDeclaredField("id").apply { isAccessible = true }
+    private val textColorField = messageClass.getDeclaredField("textColor").apply { isAccessible = true }
 
     private val unhooks: List<XC_MethodHook.Unhook>
 
@@ -89,9 +97,20 @@ internal class LoggerHooks(dexFinder: DexFinder) {
             }
         } ?: error("Attachment grid adapter onBindViewHolder not found")
 
+        val setMessage = dexFinder.findMethod {
+            matcher {
+                declaredClass(MESSAGE_VIEW)
+                usingEqStrings("message", "messageContext", "eventHandler")
+            }
+        } ?: error("MessageView.setMessage not found")
+
         unhooks = listOf(
+            setMessage.hook(after = ::bindMessage),
             setDraweeSpanStringBuilder.hook(before = { param ->
-                (param.args[0] as? SpannableStringBuilder)?.styleHistory()
+                (param.args[0] as? SpannableStringBuilder)?.run {
+                    styleMentions()
+                    styleHistory()
+                }
             }),
             bindAccessory.hook(after = attachmentBinder(bindAccessory)),
             bindGridAttachment.hook(after = attachmentBinder(bindGridAttachment)),
@@ -105,7 +124,7 @@ internal class LoggerHooks(dexFinder: DexFinder) {
 
         // Attachments that didn't change aren't bound again
         mainHandler.post {
-            for ((view, id) in boundAttachments) if (id in ids) view.setGreyed(dim)
+            for ((view, id) in bound) if (id in ids) view.setGreyed(dim)
         }
     }
 
@@ -117,7 +136,7 @@ internal class LoggerHooks(dexFinder: DexFinder) {
 
         mainHandler.post {
             for (view in greyed.toList()) view.setGreyed(false)
-            boundAttachments.clear()
+            bound.clear()
         }
     }
 
@@ -135,8 +154,34 @@ internal class LoggerHooks(dexFinder: DexFinder) {
         val item = (itemsField.get(param.thisObject) as List<*>).getOrNull(param.args[1] as Int)
         val id = item?.takeIf(accessoryClass::isInstance)?.let { attachmentId(attachmentOf.invoke(it)!!) }
 
-        if (id != null) boundAttachments[view] = id else boundAttachments.remove(view)
+        if (id != null) bound[view] = id else bound.remove(view)
         view.setGreyed(id != null && id in dimmed)
+    }
+
+    private fun bindMessage(param: XC_MethodHook.MethodHookParam) {
+        val view = param.thisObject as ViewGroup
+        val message = param.args[0]
+        val id = messageIdField.get(message) as String
+        val ids = viewIds ?: ViewIds(view).also { viewIds = it }
+
+        for (avatar in ids.avatars.mapNotNull(view::childWithId)) {
+            bound[avatar] = id
+            avatar.setGreyed(id in dimmed)
+        }
+
+        // Discord colors guild tags with the theme on every bind, so only deleted ones need it
+        if (id !in dimmed) return
+        val color = textColorField.get(message) as? Int? ?: return
+        val header = view.childWithId(ids.header) ?: return
+        for (chiplet in ids.chiplets)
+            header.findViewById<View>(chiplet)?.findViewById<TextView>(ids.tag)?.setTextColor(color)
+    }
+
+    private class ViewIds(view: View) {
+        val avatars = listOf(view.idOf("author_avatar"), view.idOf("author_avatar_decoration"))
+        val header = view.idOf("header")
+        val chiplets = listOf(view.idOf("clan_tag_chiplet"), view.idOf("lobby_tag_chiplet"))
+        val tag = view.idOf("tag")
     }
 
     private fun View.setGreyed(grey: Boolean) {
@@ -161,6 +206,13 @@ internal class LoggerHooks(dexFinder: DexFinder) {
         return field.get(attachment) as String?
     }
 }
+
+@Suppress("DiscouragedApi")
+private fun View.idOf(name: String) = resources.getIdentifier(name, "id", context.packageName)
+
+// Not findViewById, as nested messages (such as replies) have views with the same IDs
+private fun ViewGroup.childWithId(id: Int): View? =
+    (0 until childCount).asSequence().map(::getChildAt).firstOrNull { it.id == id }
 
 private inline fun Method.hook(
     crossinline before: (XC_MethodHook.MethodHookParam) -> Unit = {},

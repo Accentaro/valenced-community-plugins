@@ -1,10 +1,10 @@
 import { callNativeMethodSync } from '@revenge-mod/modules/native'
 
-// Attachment IDs native greys out
+// Attachment IDs and message IDs (for their avatars) native greys out
 const dimmed = new Set<string>()
 
 // Synchronous, so they're known before the rows showing them reach native
-export function setDimmedAttachments(ids: Iterable<string>, dim: boolean) {
+export function setDimmed(ids: Iterable<string>, dim: boolean) {
 	const changed = [...ids].filter(id => dimmed.has(id) !== dim)
 	if (!changed.length) return
 
@@ -15,7 +15,7 @@ export function setDimmedAttachments(ids: Iterable<string>, dim: boolean) {
 	])
 }
 
-export function clearDimmedAttachments() {
+export function clearDimmed() {
 	dimmed.clear()
 	callNativeMethodSync('palmdevs.message-logger.clear', [])
 }

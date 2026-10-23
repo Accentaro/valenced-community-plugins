@@ -4,7 +4,7 @@ import { instead } from '@revenge-mod/patcher'
 import { getErrorStack } from '@revenge-mod/utils/error'
 import { patchChannelActionSheet, patchMessageActionSheet } from './actionsheet'
 import { interceptMessages, resetLogs } from './logger'
-import { clearDimmedAttachments } from './native'
+import { clearDimmed } from './native'
 import { styleRow } from './rows'
 import SettingsComponent from './settings'
 import { DefaultSettings } from './shared'
@@ -23,7 +23,7 @@ export default plugin<{ jsonStorage: Settings }>({
 			...interceptMessages(settings),
 			() => {
 				resetLogs()
-				clearDimmedAttachments()
+				clearDimmed()
 			},
 			patchMessageActionSheet(e =>
 				plugin.reportError(

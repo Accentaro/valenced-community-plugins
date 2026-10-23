@@ -1,6 +1,6 @@
 import { Dispatcher } from '@revenge-mod/discord/common/flux'
 import { onFluxEventDispatched, Stores } from '@revenge-mod/discord/flux'
-import { setDimmedAttachments } from './native'
+import { setDimmed } from './native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { Settings } from './shared'
 
@@ -147,10 +147,7 @@ export function removeLog(record: MessageRecord, guildId?: string) {
 	logs.delete(record.id)
 	changed.add(record.id)
 	bypassed.add(record.id)
-	setDimmedAttachments(
-		record.attachments.map(({ id }) => id),
-		false,
-	)
+	setDimmed([record.id, ...record.attachments.map(({ id }) => id)], false)
 
 	try {
 		if (log.deleted)

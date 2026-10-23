@@ -2,7 +2,7 @@ import { Tokens } from '@revenge-mod/discord/common/tokens'
 import { Stores } from '@revenge-mod/discord/flux'
 import { processColor } from 'react-native'
 import { getLog, takeChanged } from './logger'
-import { setDimmedAttachments } from './native'
+import { setDimmed } from './native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { MessageRecord } from './logger'
 
@@ -18,10 +18,18 @@ export interface MessageRow {
 
 interface RowMessage {
 	id: string
-	content?: object[]
+	content?: ContentNode[]
 	edited?: string
 	editedColor?: number | null
+	/** Text & guild tag color */
 	textColor?: number
+	timestampColor?: number
+}
+
+interface ContentNode {
+	type?: string
+	content?: unknown
+	items?: ContentNode[][]
 }
 
 export interface RowManager {
@@ -37,6 +45,12 @@ const HistoryEnd = ''
 const EditedStart = ''
 const EditedSeparator = ''
 const EditedEnd = ''
+const MentionStart = ''
+const MentionSeparator = ''
+const MentionEnd = ''
+
+// Mentions color their own text, so textColor doesn't reach them
+const MentionTypes = new Set(['mention', 'channelMention'])
 
 type ThemeStore = DiscordModules.Flux.Store<{ theme: string }>
 
@@ -57,11 +71,13 @@ export function styleRow(
 	const deletedAttachments = new Set(
 		!log?.highlighted ? [] : log.deleted ? attachments : log.removedAttachments,
 	)
-	setDimmedAttachments(deletedAttachments, true)
-	setDimmedAttachments(
+	setDimmed(deletedAttachments, true)
+	setDimmed(
 		attachments.filter(id => !deletedAttachments.has(id)),
 		false,
 	)
+	// The message's avatar
+	setDimmed([message.id], !!(log?.deleted && log.highlighted))
 
 	if (!log) return
 
@@ -71,7 +87,35 @@ export function styleRow(
 			...(message.content ?? []),
 		]
 
-	if (log.deleted && log.highlighted) message.textColor = criticalColor()
+	if (log.deleted && log.highlighted) {
+		const color = criticalColor()
+		message.textColor = color
+		message.timestampColor = color
+		if (message.content) message.content = colorMentions(message.content, color)
+	}
+}
+
+// Discord caches parsed nodes, so they're copied
+function colorMentions(nodes: ContentNode[], color: number): ContentNode[] {
+	return nodes.flatMap(node => {
+		if (node.type && MentionTypes.has(node.type))
+			return [
+				text(`${MentionStart}${color}${MentionSeparator}`),
+				node,
+				text(MentionEnd),
+			]
+
+		// Formatting nodes can hold mentions too
+		if (Array.isArray(node.content))
+			node = { ...node, content: colorMentions(node.content, color) }
+		if (Array.isArray(node.items))
+			node = {
+				...node,
+				items: node.items.map(item => colorMentions(item, color)),
+			}
+
+		return [node]
+	})
 }
 
 function history(
