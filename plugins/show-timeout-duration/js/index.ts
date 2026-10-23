@@ -45,14 +45,6 @@ export default plugin({
 		Stores.ThemeStore.addChangeListener(sendColors)
 		cleanup(() => Stores.ThemeStore.removeChangeListener(sendColors))
 
-		const GuildMemberStore =
-			Stores.GuildMemberStore as DiscordModules.Flux.Store<{
-				getMember(
-					guildId: string,
-					userId: string,
-				): { communicationDisabledUntil?: string | null } | null
-			}>
-
 		// Messages native was told have a timeout, so it's told when it's gone
 		const timedOut = new Set<string>()
 
@@ -64,6 +56,14 @@ export default plugin({
 					after(prototype, 'generate', row => {
 						const message = row?.type === MessageRowType ? row.message : null
 						if (!message?.guildId || !message.authorId) return row
+
+						const GuildMemberStore =
+							Stores.GuildMemberStore as DiscordModules.Flux.Store<{
+								getMember(
+									guildId: string,
+									userId: string,
+								): { communicationDisabledUntil?: string | null } | null
+							}>
 
 						try {
 							const until = Date.parse(
