@@ -1,9 +1,8 @@
 import { Dispatcher } from '@revenge-mod/discord/common/flux'
-import { Stores } from '@revenge-mod/discord/flux'
+import { getStore } from '@revenge-mod/discord/flux'
 import { getModules } from '@revenge-mod/modules/finders'
 import { withProps } from '@revenge-mod/modules/finders/filters'
 import { instead } from '@revenge-mod/patcher'
-import type { DiscordModules } from '@revenge-mod/discord/types'
 
 interface Emoji {
 	id?: string | null
@@ -60,19 +59,18 @@ interface ReactorList {
 // MessageReactionsContent.tsx
 const PageSize = 100
 
+interface MessageReactionsStore {
+	getReactions(
+		channelId: string,
+		messageId: string,
+		emoji: Emoji,
+		limit: number,
+		type?: number,
+	): Map<string, unknown> | undefined
+}
+
 export default plugin({
 	start({ cleanup }) {
-		const MessageReactionsStore =
-			Stores.MessageReactionsStore as DiscordModules.Flux.Store<{
-				getReactions(
-					channelId: string,
-					messageId: string,
-					emoji: Emoji,
-					limit: number,
-					type?: number,
-				): Map<string, unknown> | undefined
-			}>
-
 		let ReactionActionCreators: ReactionActionCreators | undefined
 		const lists = new Map<string, ReactorList>()
 
@@ -198,25 +196,29 @@ export default plugin({
 				for (const [type, handler] of Object.entries(handlers))
 					Dispatcher.unsubscribe(type, handler as never)
 			},
-			instead(MessageReactionsStore, 'getReactions', function (args, original) {
-				const users = Reflect.apply(original, this, args)
-				if (!users || !ReactionActionCreators) return users
+			getStore<MessageReactionsStore>('MessageReactionsStore', store => {
+				cleanup(
+					instead(store, 'getReactions', function (args, original) {
+						const users = Reflect.apply(original, this, args)
+						if (!users || !ReactionActionCreators) return users
 
-				const [channelId, messageId, emoji, limit, type] = args
-				const list = listFor({ channelId, messageId, emoji, type })
+						const [channelId, messageId, emoji, limit, type] = args
+						const list = listFor({ channelId, messageId, emoji, type })
 
-				// Fetched before the plugin started, or reset by CONNECTION_OPEN
-				if (list.users !== users) {
-					list.users = users
-					for (const id of users.keys())
-						if (!list.cursor || compareSnowflakes(id, list.cursor) > 0)
-							list.cursor = id
-				}
+						// Fetched before the plugin started, or reset by CONNECTION_OPEN
+						if (list.users !== users) {
+							list.users = users
+							for (const id of users.keys())
+								if (!list.cursor || compareSnowflakes(id, list.cursor) > 0)
+									list.cursor = id
+						}
 
-				list.limit = Math.max(list.limit, limit ?? PageSize)
-				sync(list)
+						list.limit = Math.max(list.limit, limit ?? PageSize)
+						sync(list)
 
-				return users
+						return users
+					}),
+				)
 			}),
 			// modules/reactions/ReactionActionCreators.tsx
 			getModules(
