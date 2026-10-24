@@ -6,13 +6,13 @@
 	"author": "Palm <629368283354628116> (https://github.com/sponsors/PalmDevs \"Donations\") (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"version": "1.0.0",
 	"dependencies": {
-		"revenge.api": {
+		"valenced.api": {
 			"version": ">=1 <2"
 		},
 		"discord": {
 			"version": "*"
 		},
-		"revenge.api.themes": {
+		"valenced.api.themes": {
 			"version": "*"
 		}
 	},

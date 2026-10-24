@@ -1,6 +1,6 @@
-import { Design } from '@revenge-mod/discord/design'
-import { lookupModule } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
+import { Design } from '@valenced/discord/design'
+import { lookupModule } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
 import {
 	cloneElement,
 	isValidElement,
@@ -28,7 +28,7 @@ import {
 	openUserProfile,
 	storage,
 } from './shared'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
 import type { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native'
 import type { BasicChannel, BasicUser, Settings } from './shared'

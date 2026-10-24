@@ -1,7 +1,7 @@
 export const Setting = {
 	// MAIN SETTINGS
 
-	RevengeDeveloper: 'RevengeDeveloper',
+	ValencedDeveloper: 'ValencedDeveloper',
 
 	// SUBSETTINGS
 
@@ -19,7 +19,7 @@ export const Setting = {
 } as const
 
 export const RouteNames = {
-	[Setting.RevengeDeveloper]: 'Revenge Developer',
+	[Setting.ValencedDeveloper]: 'Valenced Developer',
 	[Setting.AssetBrowser]: 'Asset Browser',
 	[Setting.EvalJS]: 'Evaluate JavaScript',
 	[Setting.TestErrorBoundary]: 'Test ErrorBoundary',

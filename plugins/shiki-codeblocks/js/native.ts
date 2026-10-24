@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 import type { Highlight } from './highlighter'
 
 /** Synchronous so the highlights are stored before the rows reach native. */
@@ -15,7 +15,7 @@ export function clearHighlights() {
 	callNativeMethodSync('palmdevs.shiki.clear', [])
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.shiki.put': [[json: string], null]
 		'palmdevs.shiki.setOpenOnTap': [[enabled: boolean], null]

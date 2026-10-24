@@ -1,6 +1,6 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { createFilterGenerator } from '@revenge-mod/modules/finders/filters'
-import { after, instead } from '@revenge-mod/patcher'
+import { getModules } from '@valenced/modules/finders'
+import { createFilterGenerator } from '@valenced/modules/finders/filters'
+import { after, instead } from '@valenced/patcher'
 import { useEffect } from 'react'
 import { Pressable } from 'react-native'
 import { SizeTagWrapper } from './components'
@@ -8,8 +8,8 @@ import type {
 	Filter,
 	FilterGenerator,
 	FilterScopes,
-} from '@revenge-mod/modules/finders/filters'
-import type { InsteadHook } from '@revenge-mod/patcher/types'
+} from '@valenced/modules/finders/filters'
+import type { InsteadHook } from '@valenced/patcher/types'
 import type { FC, MemoExoticComponent, ReactElement, ReactNode } from 'react'
 import type { PressableProps } from 'react-native'
 

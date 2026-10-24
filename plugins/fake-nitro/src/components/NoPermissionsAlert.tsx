@@ -1,5 +1,5 @@
-import { AlertActionCreators } from '@revenge-mod/discord/actions'
-import { Design } from '@revenge-mod/discord/design'
+import { AlertActionCreators } from '@valenced/discord/actions'
+import { Design } from '@valenced/discord/design'
 import { useEffect } from 'react'
 
 const { AlertActionButton, AlertModal } = Design

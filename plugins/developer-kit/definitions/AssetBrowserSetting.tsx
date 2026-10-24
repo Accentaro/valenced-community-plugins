@@ -1,9 +1,9 @@
-import TableRowAssetIcon from '@revenge-mod/components/TableRowAssetIcon'
+import TableRowAssetIcon from '@valenced/components/TableRowAssetIcon'
 import { RouteNames, Setting } from '../constants'
-import type { SettingsItem } from '@revenge-mod/discord/modules/settings'
+import type { SettingsItem } from '@valenced/discord/modules/settings'
 
 const AssetBrowserSetting: SettingsItem = {
-	parent: Setting.RevengeDeveloper,
+	parent: Setting.ValencedDeveloper,
 	type: 'route',
 	IconComponent: () => <TableRowAssetIcon name="ImageIcon" />,
 	useTitle: () => 'Asset Browser',

@@ -5,8 +5,8 @@ import type {
 	EntryKind,
 	RegisteredGroup,
 	ThemesStoreState,
-} from '@revenge-mod/themes-api/store'
-import type { FontRole, ThemesState } from '@revenge-mod/themes-api/types'
+} from '@valenced/themes-api/store'
+import type { FontRole, ThemesState } from '@valenced/themes-api/types'
 
 const {
 	store: {

@@ -1,5 +1,5 @@
 import { GuildMemberRequesterStore, GuildMemberStore } from './discord'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 import type { MessageRecord } from './types'
 
 // `guildId:userId` to the messages waiting for the member

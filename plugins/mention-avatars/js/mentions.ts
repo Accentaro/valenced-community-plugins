@@ -1,13 +1,13 @@
-import { getAssetIdByName } from '@revenge-mod/assets'
-import { Constants } from '@revenge-mod/discord/common/constants'
-import { Stores } from '@revenge-mod/discord/flux'
-import { lookupModule } from '@revenge-mod/modules/finders'
+import { getAssetIdByName } from '@valenced/assets'
+import { Constants } from '@valenced/discord/common/constants'
+import { Stores } from '@valenced/discord/flux'
+import { lookupModule } from '@valenced/modules/finders'
 import {
 	withDependencies,
 	withProps,
-} from '@revenge-mod/modules/finders/filters'
+} from '@valenced/modules/finders/filters'
 import { Image } from 'react-native'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 import type {
 	Channel,
 	ChannelIconUtils,

@@ -1,6 +1,6 @@
-import type { ThemesApi } from '@revenge-mod/themes-api/types'
+import type { ThemesApi } from '@valenced/themes-api/types'
 
-declare module '@revenge-mod/plugins/types' {
+declare module '@valenced/plugins/types' {
 	interface PreInitPluginApi<
 		O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions,
 	> {

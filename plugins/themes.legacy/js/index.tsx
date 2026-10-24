@@ -1,8 +1,8 @@
-/// <reference types="@revenge-mod/themes-api" />
+/// <reference types="@valenced/themes-api" />
 
-import { FileModule } from '@revenge-mod/discord/native'
-import { rm } from '@revenge-mod/modules/native/fs'
-import { pluginStorageDirFor } from '@revenge-mod/plugins/constants'
+import { FileModule } from '@valenced/discord/native'
+import { rm } from '@valenced/modules/native/fs'
+import { pluginStorageDirFor } from '@valenced/plugins/constants'
 import {
 	fontFileExtensionOf,
 	legacyFontFamilies,
@@ -12,9 +12,9 @@ import {
 	parseLegacyTheme,
 } from './parsers'
 import * as Settings from './settings'
-import type { JsonStorage } from '@revenge-mod/json-storage'
-import type { PluginManifest } from '@revenge-mod/plugins/types'
-import type { ThemesApi } from '@revenge-mod/themes-api/types'
+import type { JsonStorage } from '@valenced/json-storage'
+import type { PluginManifest } from '@valenced/plugins/types'
+import type { ThemesApi } from '@valenced/themes-api/types'
 import type { LegacyFontPack, LegacyTheme } from './parsers'
 
 const GroupId = 'legacy'

@@ -1,5 +1,5 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
 import { getRecord, isLinked } from './cache'
 import type { MessageRecord } from './types'
 

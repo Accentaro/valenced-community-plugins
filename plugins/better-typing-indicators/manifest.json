@@ -5,10 +5,10 @@
 	"description": "Typing indicator in channels, with user avatars, tap to open profile, and more.",
 	"author": "Palm <629368283354628116> (https://github.com/sponsors/PalmDevs \"Donations\") (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "SuperReactionIcon",
-	"version": "1.0.3",
+	"version": "1.0.0",
 	"dependencies": {
-		"revenge.api": {
-			"version": ">=1.2.1 <2"
+		"valenced.api": {
+			"version": ">=1 <2"
 		},
 		"discord": {
 			"version": ">=352.2"
@@ -18,7 +18,7 @@
 		"script": "index.js",
 		"android": {
 			"path": "plugin.jar",
-			"class": "me.palmdevs.revenge.bettertypingindicators.BetterTypingIndicators"
+			"class": "me.palmdevs.valenced.bettertypingindicators.BetterTypingIndicators"
 		}
 	}
 }

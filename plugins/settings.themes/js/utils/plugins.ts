@@ -1,7 +1,7 @@
 import manifest from '../../manifest.json' with { type: 'json' }
-import type { PluginMatch } from '@revenge-mod/types/plugins/settings.plugins'
+import type { PluginMatch } from '@valenced/types/plugins/settings.plugins'
 
-const ThemesApiId = 'revenge.api.themes'
+const ThemesApiId = 'valenced.api.themes'
 
 /**
  * Matches theme plugins requiring the themes API. Plugins with optional theme support remain with plugins.

@@ -1,10 +1,10 @@
-import { Tokens } from '@revenge-mod/discord/common/tokens'
-import { Design } from '@revenge-mod/discord/design'
+import { Tokens } from '@valenced/discord/common/tokens'
+import { Design } from '@valenced/discord/design'
 import { useEffect, useMemo, useState } from 'react'
 import { Image, Text as RNText, StyleSheet, View } from 'react-native'
 import { themesInternal } from '..'
-import type { EntryKind } from '@revenge-mod/themes-api/store'
-import type { ThemeBase } from '@revenge-mod/themes-api/types'
+import type { EntryKind } from '@valenced/themes-api/store'
+import type { ThemeBase } from '@valenced/themes-api/types'
 import type { ReactNode } from 'react'
 import type { OptionEntry } from '../utils/kinds'
 
@@ -24,7 +24,7 @@ interface ThemeContext {
 	theme: string
 }
 
-// Untyped in @revenge-mod/types
+// Untyped in @valenced/types
 const { getSemanticColorContextFromThemeContext, useThemeContext } =
 	Design as unknown as {
 		useThemeContext(): ThemeContext

@@ -1,6 +1,6 @@
 {
-	"name": "@palmdevs/revenge-google-sans-flex-font",
+	"name": "@palmdevs/valenced-google-sans-flex-font",
 	"devDependencies": {
-		"@revenge-mod/themes-api": "workspace:*"
+		"@valenced/themes-api": "workspace:*"
 	}
 }

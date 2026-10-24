@@ -1,20 +1,20 @@
-import { getAssets } from '@revenge-mod/assets'
-import Page from '@revenge-mod/components/Page'
-import SearchInput from '@revenge-mod/components/SearchInput'
-import TableRowAssetIcon from '@revenge-mod/components/TableRowAssetIcon'
+import { FlashList } from '@shopify/flash-list'
+import { getAssets } from '@valenced/assets'
+import Page from '@valenced/components/Page'
+import SearchInput from '@valenced/components/SearchInput'
+import TableRowAssetIcon from '@valenced/components/TableRowAssetIcon'
 import {
 	AlertActionCreators,
 	ToastActionCreators,
-} from '@revenge-mod/discord/actions'
-import { Design } from '@revenge-mod/discord/design'
-import { Clipboard } from '@revenge-mod/externals/react-native-clipboard'
-import { debounce } from '@revenge-mod/utils/callback'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
-import { FlashList } from '@shopify/flash-list'
+} from '@valenced/discord/actions'
+import { Design } from '@valenced/discord/design'
+import { Clipboard } from '@valenced/externals/react-native-clipboard'
+import { debounce } from '@valenced/utils/callback'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
 import { useCallback, useMemo, useState } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
-import type { Asset, AssetId } from '@revenge-mod/assets/types'
-import type { Metro } from '@revenge-mod/modules/types'
+import type { Asset, AssetId } from '@valenced/assets/types'
+import type { Metro } from '@valenced/modules/types'
 
 const { AlertModal, AlertActionButton, TableRow, TableRowGroup, Text } = Design
 
@@ -178,7 +178,7 @@ function openAssetDisplayAlert(
 													Clipboard.setString(value)
 
 													ToastActionCreators.open(
-														'REVENGE_ASSET_BROWSER_COPIED',
+														'VALENCED_ASSET_BROWSER_COPIED',
 														{
 															icon: CopyIcon,
 															text: `Copied ${name} to clipboard`,

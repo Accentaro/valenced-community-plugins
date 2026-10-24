@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 
 /** Message ID to when its author's timeout ends (ms since epoch). */
 export type TimeoutEnds = Record<string, number>
@@ -16,7 +16,7 @@ export function setTimeoutColors(text: number, icon: number) {
 	callNativeMethodSync('palmdevs.timeout.colors', [text, icon])
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.timeout.colors': [[text: number, icon: number], null]
 		'palmdevs.timeout.put': [[json: string], null]

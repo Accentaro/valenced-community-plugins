@@ -1,19 +1,19 @@
-/// <reference types="@revenge-mod/types/hidden" />
+/// <reference types="@valenced/types/hidden" />
 
 import { DevToolsClient } from '@revenge-mod/devtools-client'
 import { LogLevel } from '@revenge-mod/devtools-shared/constants'
-import { ToastActionCreators } from '@revenge-mod/discord/actions'
-import { TypedEventEmitter } from '@revenge-mod/discord/common/utils'
-import { ClientInfoModule } from '@revenge-mod/discord/native'
-import { getBridgeInfo } from '@revenge-mod/modules/native'
-import { instead } from '@revenge-mod/patcher'
-import { asap, noop } from '@revenge-mod/utils/callback'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
-import { proxify } from '@revenge-mod/utils/proxy'
-import { useReRender } from '@revenge-mod/utils/react'
+import { ToastActionCreators } from '@valenced/discord/actions'
+import { TypedEventEmitter } from '@valenced/discord/common/utils'
+import { ClientInfoModule } from '@valenced/discord/native'
+import { getBridgeInfo } from '@valenced/modules/native'
+import { instead } from '@valenced/patcher'
+import { asap, noop } from '@valenced/utils/callback'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
+import { proxify } from '@valenced/utils/proxy'
+import { useReRender } from '@valenced/utils/react'
 import { useEffect } from 'react'
 import { api } from '.'
-import type { UnpatchFunction } from '@revenge-mod/patcher/types'
+import type { UnpatchFunction } from '@valenced/patcher/types'
 
 export const DTContext: {
 	client: DevToolsClient | null
@@ -78,6 +78,8 @@ export function connect() {
 	client.expose('api', api)
 	client.expose('cleanup', api.cleanup)
 	client.expose('logger', api.logger)
+	client.expose('valenced', api.unscoped)
+	// devtools-client still reads `scope.revenge`
 	client.expose('revenge', api.unscoped)
 	client.expose('hidden', api.unscoped.hidden)
 
@@ -112,7 +114,7 @@ export function connect() {
 			api.logger.error('DevTools error:', e.reason)
 
 			asap(() => {
-				ToastActionCreators.open('REVENGE_DEVTOOLS_ERROR', {
+				ToastActionCreators.open('VALENCED_DEVTOOLS_ERROR', {
 					icon: CircleErrorIcon,
 					text: e.reason,
 				})

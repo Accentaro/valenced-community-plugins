@@ -75,7 +75,7 @@ export function parseBadges(value: unknown): Map<string, Badge[]> {
 		if (!Array.isArray(badges)) continue
 		const valid = badges.filter(
 			(badge): badge is Badge =>
-				isBadge(badge) && badge.mod.toLowerCase() !== 'revenge',
+				isBadge(badge) && badge.mod.toLowerCase() !== 'valenced',
 		)
 		if (valid.length) users.set(userId, valid)
 	}

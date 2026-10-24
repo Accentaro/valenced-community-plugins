@@ -1,7 +1,7 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
-import { getErrorStack } from '@revenge-mod/utils/error'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
+import { getErrorStack } from '@valenced/utils/error'
 import fakeifyExpressions from './patches/expressions/fakeify'
 import realifyExpressions from './patches/expressions/realify'
 import appIcons from './patches/icons'
@@ -10,7 +10,7 @@ import { SettingsComponent } from './settings'
 import type {
 	PluginApi,
 	PluginSettingsComponent,
-} from '@revenge-mod/plugins/types'
+} from '@valenced/plugins/types'
 import type { ComponentProps } from 'react'
 
 export interface ApiOptions {

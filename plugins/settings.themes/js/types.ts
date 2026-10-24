@@ -1,5 +1,5 @@
-import type { EntryKind } from '@revenge-mod/themes-api/store'
-import type { FontRole } from '@revenge-mod/themes-api/types'
+import type { EntryKind } from '@valenced/themes-api/store'
+import type { FontRole } from '@valenced/themes-api/types'
 
 export interface KindRouteParams {
 	kind: EntryKind

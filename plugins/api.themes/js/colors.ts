@@ -1,8 +1,8 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { before, instead } from '@revenge-mod/patcher'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { before, instead } from '@valenced/patcher'
 import { useSyncExternalStore } from 'react'
-import type { PreInitPluginApi } from '@revenge-mod/plugins/types'
+import type { PreInitPluginApi } from '@valenced/plugins/types'
 import type { FC } from 'react'
 import type { DiscordColors, ThemeBase, ThemeColors } from './types'
 
@@ -259,7 +259,7 @@ function getColorsVersion() {
 	return colorsVersion
 }
 
-const KeyPrefix = 'revenge-themes-colors:'
+const KeyPrefix = 'valenced-themes-colors:'
 
 // Same array for same input, so context only changes when version increments.
 function experimentsWithVersion(experiments: string[], version: number) {

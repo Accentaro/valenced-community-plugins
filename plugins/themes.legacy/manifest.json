@@ -1,22 +1,22 @@
 {
 	"format": 1,
-	"id": "revenge.themes.legacy",
+	"id": "valenced.themes.legacy",
 	"name": "Legacy Themes",
 	"description": "Import and use legacy themes and font packs by URL.",
-	"author": "Revenge",
+	"author": "Valenced",
 	"icon": "PaintPaletteIcon",
-	"version": "1.1.0",
+	"version": "1.0.0",
 	"dependencies": {
-		"revenge.api": {
+		"valenced.api": {
 			"version": ">=1 <2"
 		},
 		"discord": {
 			"version": "*"
 		},
-		"revenge.api.themes": {
+		"valenced.api.themes": {
 			"version": ">=1 <2"
 		},
-		"revenge.settings.themes": {}
+		"valenced.settings.themes": {}
 	},
 	"dist": {
 		"script": "index.js"

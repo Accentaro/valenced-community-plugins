@@ -1,4 +1,4 @@
-import { onFluxEventDispatched } from '@revenge-mod/discord/flux'
+import { onFluxEventDispatched } from '@valenced/discord/flux'
 
 export default plugin({
 	start({ cleanup }) {

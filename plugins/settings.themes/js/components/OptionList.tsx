@@ -1,6 +1,6 @@
-import { getAssetIdByName } from '@revenge-mod/assets'
-import { Design } from '@revenge-mod/discord/design'
-import { ReactNavigationNative } from '@revenge-mod/externals/react-navigation'
+import { getAssetIdByName } from '@valenced/assets'
+import { Design } from '@valenced/discord/design'
+import { ReactNavigationNative } from '@valenced/externals/react-navigation'
 import { FlatList, StyleSheet } from 'react-native'
 import { pluginSettings } from '..'
 import { RouteNames, Setting } from '../constants'
@@ -11,7 +11,7 @@ import PluginInfoButton from './PluginInfoButton'
 import PluginSettingsButton from './PluginSettingsButton'
 import { subLabelOf } from './Previews'
 import ReloadButton from './ReloadButton'
-import type { EntryKind } from '@revenge-mod/themes-api/store'
+import type { EntryKind } from '@valenced/themes-api/store'
 import type { GroupRouteParams } from '../types'
 import type { Section } from '../utils/kinds'
 
@@ -115,7 +115,7 @@ function SectionGroup({
 					iconPosition="end"
 					text={`See all ${total} ${Kinds[kind].label}`}
 					onPress={() =>
-						navigation.navigate(RouteNames[Setting.RevengeThemesGroup], {
+						navigation.navigate(RouteNames[Setting.ValencedThemesGroup], {
 							kind,
 							plugin: section.plugin!,
 							group: section.group!,

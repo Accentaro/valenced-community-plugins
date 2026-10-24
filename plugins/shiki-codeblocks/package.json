@@ -1,5 +1,5 @@
 {
-	"name": "@revenge-mod/shiki-codeblocks",
+	"name": "@valenced/shiki-codeblocks",
 	"private": true,
 	"dependencies": {
 		"shiki": "^4",

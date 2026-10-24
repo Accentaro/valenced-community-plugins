@@ -1,9 +1,9 @@
-import { Tokens } from '@revenge-mod/discord/common/tokens'
-import { Stores } from '@revenge-mod/discord/flux'
+import { Tokens } from '@valenced/discord/common/tokens'
+import { Stores } from '@valenced/discord/flux'
 import { processColor } from 'react-native'
 import { getLog, takeChanged } from './logger'
 import { setDimmed } from './native'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 import type { MessageRecord } from './logger'
 
 export interface GenerateArgs {

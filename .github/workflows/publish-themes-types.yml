@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 env:
-  THEMES_TYPES_REPO: revenge-mod/revenge-themes-types
+  THEMES_TYPES_REPO: Valenced/valenced-themes-types
 
 jobs:
   publish:

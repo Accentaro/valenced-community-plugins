@@ -1,11 +1,11 @@
-import TableRowAssetIcon from '@revenge-mod/components/TableRowAssetIcon'
 import { DevToolsClient } from '@revenge-mod/devtools-client'
+import TableRowAssetIcon from '@valenced/components/TableRowAssetIcon'
 import { Setting } from '../constants'
 import { connect, useIsConnected } from '../devtools'
-import type { SettingsItem } from '@revenge-mod/discord/modules/settings'
+import type { SettingsItem } from '@valenced/discord/modules/settings'
 
 const DTConnectSetting: SettingsItem = {
-	parent: Setting.RevengeDeveloper,
+	parent: Setting.ValencedDeveloper,
 	IconComponent: () => <TableRowAssetIcon name="LinkIcon" />,
 	useTitle: () => 'Connect to DevTools',
 	useDescription: () => `Version: ${DevToolsClient.version}`,

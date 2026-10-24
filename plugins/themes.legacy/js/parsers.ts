@@ -2,7 +2,7 @@ import type {
 	FontVariant,
 	ThemeBackground,
 	ThemeColors,
-} from '@revenge-mod/themes-api/types'
+} from '@valenced/themes-api/types'
 
 /** Vendetta and Bunny theme format (spec 2). */
 export interface LegacyTheme {

@@ -1,20 +1,20 @@
-import { ToastActionCreators } from '@revenge-mod/discord/actions'
-import { Tokens } from '@revenge-mod/discord/common/tokens'
-import { Design } from '@revenge-mod/discord/design'
-import { onFluxEventDispatched } from '@revenge-mod/discord/flux'
+import { ToastActionCreators } from '@valenced/discord/actions'
+import { Tokens } from '@valenced/discord/common/tokens'
+import { Design } from '@valenced/discord/design'
+import { onFluxEventDispatched } from '@valenced/discord/flux'
 import {
 	getModuleWithImportedPath,
 	lookupModuleWithImportedPath,
-} from '@revenge-mod/discord/utils/modules/finders'
-import { after } from '@revenge-mod/patcher'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
-import { proxify } from '@revenge-mod/utils/proxy'
-import { findInReactFiber } from '@revenge-mod/utils/react'
+} from '@valenced/discord/utils/modules/finders'
+import { after } from '@valenced/patcher'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
+import { proxify } from '@valenced/utils/proxy'
+import { findInReactFiber } from '@valenced/utils/react'
 import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import SettingsComponent from './settings'
 import { DefaultSettings } from './shared'
-import type { JsonStorage } from '@revenge-mod/json-storage'
+import type { JsonStorage } from '@valenced/json-storage'
 import type { FC, MemoExoticComponent, ReactElement, ReactNode } from 'react'
 import type { ImageStyle, StyleProp } from 'react-native'
 import type { Settings } from './shared'
@@ -119,7 +119,7 @@ function SilentTypingButton() {
 			IconComponent={enabled ? KeyboardOffIcon : KeyboardIcon}
 			onPress={() => {
 				storage.set({ enabled: !enabled })
-				ToastActionCreators.open(`REVENGE_SILENT_TYPING_${enabled}`, {
+				ToastActionCreators.open(`VALENCED_SILENT_TYPING_${enabled}`, {
 					icon: KeyboardIcon,
 					text: `Silent typing ${enabled ? 'disabled' : 'enabled'}`,
 				})

@@ -1,8 +1,8 @@
-import { Page } from '@revenge-mod/components'
-import { Design } from '@revenge-mod/discord/design'
-import { nodeUtil } from '@revenge-mod/externals/browserify'
-import { getErrorStack } from '@revenge-mod/utils/error'
-import { sleep } from '@revenge-mod/utils/promise'
+import { Page } from '@valenced/components'
+import { Design } from '@valenced/discord/design'
+import { nodeUtil } from '@valenced/externals/browserify'
+import { getErrorStack } from '@valenced/utils/error'
+import { sleep } from '@valenced/utils/promise'
 import { useRef, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { api } from '..'
@@ -36,7 +36,7 @@ export default function EvalJSSettingScreen() {
 					onChange={v => {
 						code.current = v
 					}}
-					placeholder="revenge.discord.native.BundleUpdaterManager.reload()"
+					placeholder="valenced.discord.native.BundleUpdaterManager.reload()"
 					size="md"
 				/>
 				<TableRowGroup title="Inspection Options">
@@ -97,7 +97,7 @@ export default function EvalJSSettingScreen() {
 						try {
 							if (!api) {
 								setResult(
-									'<Revenge API not available, snippet will be run without it...>',
+									'<Valenced API not available, snippet will be run without it...>',
 								)
 
 								await sleep(1000)
@@ -107,7 +107,7 @@ export default function EvalJSSettingScreen() {
 
 							// biome-ignore lint/security/noGlobalEval: Intentional
 							const res = (0, eval)(
-								`var api=${key},{unscoped:revenge}=api;undefined;${code.current}//# sourceURL=Revenge:EvalJS`,
+								`var api=${key},{unscoped:valenced}=api;undefined;${code.current}//# sourceURL=Valenced:EvalJS`,
 							)
 
 							setResult(

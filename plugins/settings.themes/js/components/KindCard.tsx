@@ -1,12 +1,12 @@
-import { getAssetIdByName } from '@revenge-mod/assets'
-import { Tokens } from '@revenge-mod/discord/common/tokens'
-import { Design } from '@revenge-mod/discord/design'
+import { getAssetIdByName } from '@valenced/assets'
+import { Tokens } from '@valenced/discord/common/tokens'
+import { Design } from '@valenced/discord/design'
 import { Image, Pressable } from 'react-native'
 import { pluginSettings } from '..'
 import { Kinds, useActiveOption } from '../utils/kinds'
 import { HintCount, IconHints, useHintFontFamily } from './KindHints'
 import { ColorSwatches, EmojiPreview, PREVIEW_SPACING } from './Previews'
-import type { EntryKind } from '@revenge-mod/themes-api/store'
+import type { EntryKind } from '@valenced/themes-api/store'
 
 const { Card, Stack, Text, createStyles } = Design
 

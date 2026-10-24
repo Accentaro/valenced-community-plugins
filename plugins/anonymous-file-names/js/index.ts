@@ -1,6 +1,6 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { before } from '@revenge-mod/patcher'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { before } from '@valenced/patcher'
 import SettingsComponent from './settings'
 
 export interface Settings {

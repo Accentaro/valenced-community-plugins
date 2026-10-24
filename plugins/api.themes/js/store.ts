@@ -2,8 +2,8 @@ import {
 	addAssetOverride,
 	getAssetsByName,
 	removeAssetOverride,
-} from '@revenge-mod/assets'
-import { pluginDistDirFor } from '@revenge-mod/plugins/constants'
+} from '@valenced/assets'
+import { pluginDistDirFor } from '@valenced/plugins/constants'
 import { createStore } from 'zustand/vanilla'
 import {
 	discordColors,
@@ -21,8 +21,8 @@ import {
 	writeFontsSelection,
 	writeIconsSelection,
 } from './native'
-import type { PackagerAsset } from '@revenge-mod/assets/types'
-import type { PluginManifest } from '@revenge-mod/plugins/types'
+import type { PackagerAsset } from '@valenced/assets/types'
+import type { PluginManifest } from '@valenced/plugins/types'
 import type {
 	BackgroundSettings,
 	ColorsSelection,
@@ -472,7 +472,7 @@ export function previewFontFamilyOf(
 	if (!family) return
 
 	// Commas split into a fallback chain in React Native font styles
-	const name = `revenge-themes-preview:${[plugin, groupId, packId, family].map(encodeURIComponent).join('/')}`
+	const name = `valenced-themes-preview:${[plugin, groupId, packId, family].map(encodeURIComponent).join('/')}`
 	registerPreviewFont(name, families[family]!)
 	return name
 }

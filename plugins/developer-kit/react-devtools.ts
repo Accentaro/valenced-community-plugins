@@ -1,9 +1,9 @@
-import { ToastActionCreators } from '@revenge-mod/discord/actions'
-import { TypedEventEmitter } from '@revenge-mod/discord/common/utils'
-import { asap } from '@revenge-mod/utils/callback'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
-import { proxify } from '@revenge-mod/utils/proxy'
-import { useReRender } from '@revenge-mod/utils/react'
+import { ToastActionCreators } from '@valenced/discord/actions'
+import { TypedEventEmitter } from '@valenced/discord/common/utils'
+import { asap } from '@valenced/utils/callback'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
+import { proxify } from '@valenced/utils/proxy'
+import { useReRender } from '@valenced/utils/react'
 import { useEffect } from 'react'
 import { api } from '.'
 
@@ -52,7 +52,7 @@ export function connect() {
 			api.logger.error('React DevTools error:', e.reason)
 
 			asap(() => {
-				ToastActionCreators.open('REVENGE_REACT_DEVTOOLS_ERROR', {
+				ToastActionCreators.open('VALENCED_REACT_DEVTOOLS_ERROR', {
 					icon: CircleErrorIcon,
 					text: e.reason,
 				})

@@ -1,7 +1,7 @@
-import { Design } from '@revenge-mod/discord/design'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { after, instead } from '@revenge-mod/patcher'
+import { Design } from '@valenced/discord/design'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { after, instead } from '@valenced/patcher'
 import { cloneElement, isValidElement } from 'react'
 import {
 	ChannelTypingIndicator,

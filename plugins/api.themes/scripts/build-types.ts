@@ -31,7 +31,7 @@ await writeFile(
 	join(out, 'package.json'),
 	`${JSON.stringify(
 		{
-			name: '@revenge-mod/themes-api',
+			name: '@valenced/themes-api',
 			version: manifest.version,
 			description: manifest.description,
 			license: 'GPL-3.0',
@@ -41,8 +41,8 @@ await writeFile(
 				'./types': { types: './types.d.ts' },
 			},
 			peerDependencies: {
-				'@revenge-mod/types':
-					'git+https://github.com/revenge-mod/revenge-types.git',
+				'@valenced/types':
+					'git+https://github.com/Valenced/valenced-types.git',
 			},
 		},
 		null,

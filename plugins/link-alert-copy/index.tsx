@@ -1,9 +1,9 @@
-import { Design } from '@revenge-mod/discord/design'
-import { Clipboard } from '@revenge-mod/externals/react-native-clipboard'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withName } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import { Design } from '@valenced/discord/design'
+import { Clipboard } from '@valenced/externals/react-native-clipboard'
+import { getModules } from '@valenced/modules/finders'
+import { withName } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
+import type { DiscordModules } from '@valenced/discord/types'
 import type { FC, ReactElement, ReactNode } from 'react'
 
 const { Button } = Design

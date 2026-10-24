@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useStore } from 'zustand/react'
 import { themesInternal } from '..'
-import type { FontRole } from '@revenge-mod/themes-api/types'
+import type { FontRole } from '@valenced/themes-api/types'
 import type { OptionEntry, Section } from './kinds'
 
 const {

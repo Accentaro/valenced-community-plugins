@@ -1,7 +1,7 @@
-import { Stores } from '@revenge-mod/discord/flux'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import { Stores } from '@valenced/discord/flux'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import type { DiscordModules } from '@valenced/discord/types'
 import type {
 	Channel,
 	ContentNode,

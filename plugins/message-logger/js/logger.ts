@@ -1,7 +1,7 @@
-import { Dispatcher } from '@revenge-mod/discord/common/flux'
-import { onFluxEventDispatched, Stores } from '@revenge-mod/discord/flux'
+import { Dispatcher } from '@valenced/discord/common/flux'
+import { onFluxEventDispatched, Stores } from '@valenced/discord/flux'
 import { setDimmed } from './native'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 import type { Settings } from './shared'
 
 export interface Attachment {

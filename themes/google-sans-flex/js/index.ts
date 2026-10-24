@@ -1,6 +1,6 @@
-/// <reference types="@revenge-mod/themes-api" />
+/// <reference types="@valenced/themes-api" />
 
-import type { FontVariant } from '@revenge-mod/themes-api/types'
+import type { FontVariant } from '@valenced/themes-api/types'
 
 const Font = 'assets/fonts/GoogleSansFlex.ttf'
 

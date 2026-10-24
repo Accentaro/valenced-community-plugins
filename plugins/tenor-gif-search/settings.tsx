@@ -1,7 +1,7 @@
-import Page from '@revenge-mod/components/Page'
-import { Design } from '@revenge-mod/discord/design'
+import Page from '@valenced/components/Page'
+import { Design } from '@valenced/discord/design'
 import { DefaultGridQuality, GridQualities } from '.'
-import type { PluginSettingsComponent } from '@revenge-mod/plugins/types'
+import type { PluginSettingsComponent } from '@valenced/plugins/types'
 import type { ComponentProps } from 'react'
 import type { GridQuality, Settings } from '.'
 

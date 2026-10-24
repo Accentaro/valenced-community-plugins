@@ -1,13 +1,13 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { createFilterGenerator } from '@revenge-mod/modules/finders/filters'
-import { after, before } from '@revenge-mod/patcher'
-import { findInReactFiber, useReRender } from '@revenge-mod/utils/react'
+import { getModules } from '@valenced/modules/finders'
+import { createFilterGenerator } from '@valenced/modules/finders/filters'
+import { after, before } from '@valenced/patcher'
+import { findInReactFiber, useReRender } from '@valenced/utils/react'
 import { SettingsComponent } from './settings'
 import type {
 	Filter,
 	FilterGenerator,
 	FilterScopes,
-} from '@revenge-mod/modules/finders/filters'
+} from '@valenced/modules/finders/filters'
 import type { FC, MemoExoticComponent, ReactElement, RefObject } from 'react'
 
 export interface Settings {

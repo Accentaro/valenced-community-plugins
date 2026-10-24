@@ -1,6 +1,6 @@
-import { TableRowAssetIcon } from '@revenge-mod/components'
-import Page from '@revenge-mod/components/Page'
-import { Design } from '@revenge-mod/discord/design'
+import { TableRowAssetIcon } from '@valenced/components'
+import Page from '@valenced/components/Page'
+import { Design } from '@valenced/discord/design'
 import { ScrollView } from 'react-native'
 import type { FakeNitroSettingsComponentProps } from '.'
 

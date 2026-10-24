@@ -1,5 +1,5 @@
-import { Stores } from '@revenge-mod/discord/flux'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import { Stores } from '@valenced/discord/flux'
+import type { DiscordModules } from '@valenced/discord/types'
 
 interface StoredMessage {
 	content?: string

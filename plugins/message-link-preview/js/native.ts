@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 
 // Must match Kind in native, normal messages have none
 export type PreviewView = 'system' | 'automod'
@@ -32,7 +32,7 @@ export function setInteractive(enabled: boolean) {
 	])
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.message-link-preview.put': [[json: string], null]
 		'palmdevs.message-link-preview.clear': [[], null]

@@ -1,11 +1,11 @@
-import { getAssetIdByName } from '@revenge-mod/assets'
-import Page from '@revenge-mod/components/Page'
-import { ToastActionCreators } from '@revenge-mod/discord/actions'
-import { Design } from '@revenge-mod/discord/design'
+import { getAssetIdByName } from '@valenced/assets'
+import Page from '@valenced/components/Page'
+import { ToastActionCreators } from '@valenced/discord/actions'
+import { Design } from '@valenced/discord/design'
 import { useState } from 'react'
 import { ScrollView } from 'react-native'
 import { importLegacyFontPack, importLegacyTheme, removeLegacyImport } from '.'
-import type { PluginSettingsComponent } from '@revenge-mod/plugins/types'
+import type { PluginSettingsComponent } from '@valenced/plugins/types'
 import type { ComponentProps } from 'react'
 import type { Storage } from '.'
 
@@ -14,7 +14,7 @@ const { Button, IconButton, Stack, TableRow, TableRowGroup, TextInput } = Design
 const TrashIcon = getAssetIdByName('TrashIcon')!
 
 function showErrorToast(e: unknown) {
-	ToastActionCreators.open('REVENGE_LEGACY_THEMES_ERROR', {
+	ToastActionCreators.open('VALENCED_LEGACY_THEMES_ERROR', {
 		text: e instanceof Error ? e.message : String(e),
 		variant: 'critical',
 	})

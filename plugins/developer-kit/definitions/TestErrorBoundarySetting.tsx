@@ -1,10 +1,10 @@
-import TableRowAssetIcon from '@revenge-mod/components/TableRowAssetIcon'
+import TableRowAssetIcon from '@valenced/components/TableRowAssetIcon'
 import { RouteNames, Setting } from '../constants'
 import TestErrorBoundarySettingScreen from '../screens/TestErrorBoundarySettingScreen'
-import type { SettingsItem } from '@revenge-mod/discord/modules/settings'
+import type { SettingsItem } from '@valenced/discord/modules/settings'
 
 const TestErrorBoundarySetting: SettingsItem = {
-	parent: Setting.RevengeDeveloper,
+	parent: Setting.ValencedDeveloper,
 	type: 'route',
 	variant: 'danger',
 	IconComponent: () => (

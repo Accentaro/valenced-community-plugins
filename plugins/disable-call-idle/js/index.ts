@@ -1,7 +1,7 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
-import { noop } from '@revenge-mod/utils/callback'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
+import { noop } from '@valenced/utils/callback'
 
 interface IdleTimer {
 	start(...args: unknown[]): unknown

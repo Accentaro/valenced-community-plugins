@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 
 /** Adds space after the last message, below the typing indicator view `tag`. */
 export function setChatListExtraSpacing(tag: number, extraDp: number) {
@@ -9,7 +9,7 @@ export function setChatListExtraSpacing(tag: number, extraDp: number) {
 	}
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.typing.setExtraSpacing': [[tag: number, extraDp: number], null]
 	}

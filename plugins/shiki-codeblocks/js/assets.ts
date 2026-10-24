@@ -1,5 +1,5 @@
-import { readFileSync } from '@revenge-mod/modules/native/fs'
-import { pluginDistDirFor } from '@revenge-mod/plugins/constants'
+import { readFileSync } from '@valenced/modules/native/fs'
+import { pluginDistDirFor } from '@valenced/plugins/constants'
 import type { ShikiIndex } from './types'
 
 const PluginId = 'palmdevs.shiki-codeblocks'

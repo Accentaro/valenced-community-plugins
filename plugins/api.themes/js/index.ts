@@ -15,7 +15,7 @@ const {
 	unregisterAll,
 } = store
 
-const SettingsPluginId = 'revenge.settings.themes'
+const SettingsPluginId = 'valenced.settings.themes'
 
 export default plugin({
 	preInit({ cleanup, decorate, plugin: self }) {

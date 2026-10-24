@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 
 /** Reaction key to avatar URLs, see `reactionKey` */
 export type Avatars = Record<string, string[]>
@@ -17,7 +17,7 @@ export function clearAvatars() {
 	callNativeMethodSync('palmdevs.who-reacted.clear', [])
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.who-reacted.put': [[json: string], null]
 		'palmdevs.who-reacted.shown': [[], string]

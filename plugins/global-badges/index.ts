@@ -1,10 +1,10 @@
-import { NetInfo } from '@revenge-mod/externals/react-native-community'
-import { getJsonStorage } from '@revenge-mod/json-storage'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withName } from '@revenge-mod/modules/finders/filters'
-import { before, instead } from '@revenge-mod/patcher'
-import { pluginStorageDirFor } from '@revenge-mod/plugins/constants'
-import { React, ReactJSXRuntime } from '@revenge-mod/react'
+import { NetInfo } from '@valenced/externals/react-native-community'
+import { getJsonStorage } from '@valenced/json-storage'
+import { getModules } from '@valenced/modules/finders'
+import { withName } from '@valenced/modules/finders/filters'
+import { before, instead } from '@valenced/patcher'
+import { pluginStorageDirFor } from '@valenced/plugins/constants'
+import { React, ReactJSXRuntime } from '@valenced/react'
 import { useSyncExternalStore } from 'react'
 import {
 	createBadgeStore,
@@ -14,9 +14,9 @@ import {
 } from './badges'
 import SettingsComponent from './settings'
 import { setupBadgeViewer } from './viewer'
-import type { JsonStorage } from '@revenge-mod/json-storage'
-import type { PluginApi } from '@revenge-mod/plugins/types'
-import type { AnyObject } from '@revenge-mod/utils/types'
+import type { JsonStorage } from '@valenced/json-storage'
+import type { PluginApi } from '@valenced/plugins/types'
+import type { AnyObject } from '@valenced/utils/types'
 import type { Settings } from './badges'
 
 const RefreshInterval = 30 * 60 * 1000

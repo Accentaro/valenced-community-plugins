@@ -1,5 +1,5 @@
 {
-	"name": "@revenge-mod/themes-api",
+	"name": "@valenced/themes-api",
 	"scripts": {
 		"build:types": "bun scripts/build-types.ts"
 	},

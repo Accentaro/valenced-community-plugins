@@ -1,11 +1,11 @@
-import { Stores } from '@revenge-mod/discord/flux'
-import { getModules, lookupModule } from '@revenge-mod/modules/finders'
+import { Stores } from '@valenced/discord/flux'
+import { getModules, lookupModule } from '@valenced/modules/finders'
 import {
 	withDependencies,
 	withProps,
-} from '@revenge-mod/modules/finders/filters'
-import { before, instead } from '@revenge-mod/patcher'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+} from '@valenced/modules/finders/filters'
+import { before, instead } from '@valenced/patcher'
+import type { DiscordModules } from '@valenced/discord/types'
 
 interface JoinGuildOptions {
 	source?: string

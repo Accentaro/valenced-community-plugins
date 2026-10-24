@@ -1,12 +1,12 @@
-import { Stores } from '@revenge-mod/discord/flux'
-import { lookupModule } from '@revenge-mod/modules/finders'
+import { Stores } from '@valenced/discord/flux'
+import { lookupModule } from '@valenced/modules/finders'
 import {
 	withDependencies,
 	withName,
-} from '@revenge-mod/modules/finders/filters'
-import type { AssetId } from '@revenge-mod/assets/types'
-import type { DiscordModules } from '@revenge-mod/discord/types'
-import type { JsonStorage } from '@revenge-mod/json-storage'
+} from '@valenced/modules/finders/filters'
+import type { AssetId } from '@valenced/assets/types'
+import type { DiscordModules } from '@valenced/discord/types'
+import type { JsonStorage } from '@valenced/json-storage'
 import type { ImageSourcePropType } from 'react-native'
 
 export enum DataSource {

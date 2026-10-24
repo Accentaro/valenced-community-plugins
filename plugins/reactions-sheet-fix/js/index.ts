@@ -1,8 +1,8 @@
-import { Dispatcher } from '@revenge-mod/discord/common/flux'
-import { getStore } from '@revenge-mod/discord/flux'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
+import { Dispatcher } from '@valenced/discord/common/flux'
+import { getStore } from '@valenced/discord/flux'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
 
 interface Emoji {
 	id?: string | null

@@ -1,10 +1,10 @@
-import { Stores } from '@revenge-mod/discord/flux'
-import { JsonStorageUpdateMode } from '@revenge-mod/json-storage'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withName } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
+import { Stores } from '@valenced/discord/flux'
+import { JsonStorageUpdateMode } from '@valenced/json-storage'
+import { getModules } from '@valenced/modules/finders'
+import { withName } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
 import SettingsComponent from './settings'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 
 export interface Settings {
 	blocked: boolean

@@ -1,6 +1,6 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { after, instead } from '@revenge-mod/patcher'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { after, instead } from '@valenced/patcher'
 import { cloneElement, createElement, isValidElement } from 'react'
 import type { FC, MemoExoticComponent, ReactElement, ReactNode } from 'react'
 

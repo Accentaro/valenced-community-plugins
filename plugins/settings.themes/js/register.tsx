@@ -2,31 +2,31 @@ import {
 	addSettingsItemToSection,
 	refreshSettings,
 	registerSettingsItems,
-} from '@revenge-mod/discord/modules/settings'
+} from '@valenced/discord/modules/settings'
 import { Setting } from './constants'
-import RevengeThemesBackgroundSetting from './definitions/RevengeThemesBackgroundSetting'
-import RevengeThemesBrowseSetting from './definitions/RevengeThemesBrowseSetting'
-import RevengeThemesFontFamiliesSetting from './definitions/RevengeThemesFontFamiliesSetting'
-import RevengeThemesFontFamilySetting from './definitions/RevengeThemesFontFamilySetting'
-import RevengeThemesGroupSetting from './definitions/RevengeThemesGroupSetting'
-import RevengeThemesKindSetting from './definitions/RevengeThemesKindSetting'
-import RevengeThemesPluginsSetting from './definitions/RevengeThemesPluginsSetting'
-import RevengeThemesSetting from './definitions/RevengeThemesSetting'
+import ValencedThemesBackgroundSetting from './definitions/ValencedThemesBackgroundSetting'
+import ValencedThemesBrowseSetting from './definitions/ValencedThemesBrowseSetting'
+import ValencedThemesFontFamiliesSetting from './definitions/ValencedThemesFontFamiliesSetting'
+import ValencedThemesFontFamilySetting from './definitions/ValencedThemesFontFamilySetting'
+import ValencedThemesGroupSetting from './definitions/ValencedThemesGroupSetting'
+import ValencedThemesKindSetting from './definitions/ValencedThemesKindSetting'
+import ValencedThemesPluginsSetting from './definitions/ValencedThemesPluginsSetting'
+import ValencedThemesSetting from './definitions/ValencedThemesSetting'
 
 export default function register() {
 	const unregisterItems = registerSettingsItems({
-		[Setting.RevengeThemes]: RevengeThemesSetting,
-		[Setting.RevengeThemesKind]: RevengeThemesKindSetting,
-		[Setting.RevengeThemesGroup]: RevengeThemesGroupSetting,
-		[Setting.RevengeThemesFontFamilies]: RevengeThemesFontFamiliesSetting,
-		[Setting.RevengeThemesFontFamily]: RevengeThemesFontFamilySetting,
-		[Setting.RevengeThemesPlugins]: RevengeThemesPluginsSetting,
-		[Setting.RevengeThemesBrowse]: RevengeThemesBrowseSetting,
-		[Setting.RevengeThemesBackground]: RevengeThemesBackgroundSetting,
+		[Setting.ValencedThemes]: ValencedThemesSetting,
+		[Setting.ValencedThemesKind]: ValencedThemesKindSetting,
+		[Setting.ValencedThemesGroup]: ValencedThemesGroupSetting,
+		[Setting.ValencedThemesFontFamilies]: ValencedThemesFontFamiliesSetting,
+		[Setting.ValencedThemesFontFamily]: ValencedThemesFontFamilySetting,
+		[Setting.ValencedThemesPlugins]: ValencedThemesPluginsSetting,
+		[Setting.ValencedThemesBrowse]: ValencedThemesBrowseSetting,
+		[Setting.ValencedThemesBackground]: ValencedThemesBackgroundSetting,
 	})
 	const removeFromSection = addSettingsItemToSection(
-		'REVENGE',
-		Setting.RevengeThemes,
+		'VALENCED',
+		Setting.ValencedThemes,
 		2,
 	)
 

@@ -1,14 +1,14 @@
-/// <reference types="@revenge-mod/themes-api/hidden" />
-/// <reference types="@revenge-mod/types/plugins/settings.plugins" />
+/// <reference types="@valenced/themes-api/hidden" />
+/// <reference types="@valenced/types/plugins/settings.plugins" />
 
-import { ToastActionCreators } from '@revenge-mod/discord/actions'
-import { Design } from '@revenge-mod/discord/design'
-import { onSettingsModulesLoaded } from '@revenge-mod/discord/modules/settings'
-import { ReactNavigationNative } from '@revenge-mod/externals/react-navigation'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
+import { ToastActionCreators } from '@valenced/discord/actions'
+import { Design } from '@valenced/discord/design'
+import { onSettingsModulesLoaded } from '@valenced/discord/modules/settings'
+import { ReactNavigationNative } from '@valenced/externals/react-navigation'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
 import { RouteNames, Setting } from './constants'
 import { isThemePlugin } from './utils/plugins'
-import type { PluginApi, PreInitPluginApi } from '@revenge-mod/plugins/types'
+import type { PluginApi, PreInitPluginApi } from '@valenced/plugins/types'
 
 export let themesInternal: PreInitPluginApi['themesInternal']
 export let pluginSettings: PluginApi['pluginSettings']
@@ -37,13 +37,13 @@ export default plugin<{ jsonStorage: Settings }>({
 		)
 
 		if (plugin.startedLate) {
-			ToastActionCreators.open('REVENGE_THEMES_GUIDE', {
+			ToastActionCreators.open('VALENCED_THEMES_GUIDE', {
 				icon: lookupGeneratedIconComponent('LightbulbIcon'),
 				text: (
 					<Design.Text variant="text-md/normal" color="text-strong">
 						You can now access:{' \n'}
 						<Design.Text variant="text-md/bold">
-							Settings &gt; Revenge &gt; Themes
+							Settings &gt; Valenced &gt; Themes
 						</Design.Text>
 					</Design.Text>
 				),
@@ -53,7 +53,7 @@ export default plugin<{ jsonStorage: Settings }>({
 	},
 	SettingsComponent: () => {
 		const navigation = ReactNavigationNative.useNavigation()
-		navigation.replace(RouteNames[Setting.RevengeThemes])
+		navigation.replace(RouteNames[Setting.ValencedThemes])
 
 		return (
 			<Design.Text>This page isn't supposed to exist. :clueless:</Design.Text>

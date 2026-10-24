@@ -1,7 +1,7 @@
 import {
 	addSettingsItemToSection,
 	registerSettingsItems,
-} from '@revenge-mod/discord/modules/settings'
+} from '@valenced/discord/modules/settings'
 import { api } from '.'
 import { Setting } from './constants'
 import AssetBrowserSetting from './definitions/AssetBrowserSetting'
@@ -12,13 +12,13 @@ import EvalJSSetting from './definitions/EvalJSSetting'
 import RDTAutoConnectSetting from './definitions/RDTAutoConnectSetting'
 import RDTConnectSetting from './definitions/RDTConnectSetting'
 import RDTDisconnectSetting from './definitions/RDTDisconnectSetting'
-import RevengeDeveloperSetting from './definitions/RevengeDeveloperSetting'
 import TestErrorBoundarySetting from './definitions/TestErrorBoundarySetting'
+import ValencedDeveloperSetting from './definitions/ValencedDeveloperSetting'
 
 export function register() {
 	api.cleanup(
 		registerSettingsItems({
-			[Setting.RevengeDeveloper]: RevengeDeveloperSetting,
+			[Setting.ValencedDeveloper]: ValencedDeveloperSetting,
 			[Setting.DTAutoConnect]: DTAutoConnectSetting,
 			[Setting.DTConnect]: DTConnectSetting,
 			[Setting.DTDisconnect]: DTDisconnectSetting,
@@ -29,6 +29,6 @@ export function register() {
 			[Setting.AssetBrowser]: AssetBrowserSetting,
 			[Setting.TestErrorBoundary]: TestErrorBoundarySetting,
 		}),
-		addSettingsItemToSection('REVENGE', Setting.RevengeDeveloper, -1),
+		addSettingsItemToSection('VALENCED', Setting.ValencedDeveloper, -1),
 	)
 }

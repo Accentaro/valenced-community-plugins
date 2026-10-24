@@ -1,9 +1,9 @@
-import { ActionSheetActionCreators } from '@revenge-mod/discord/actions'
-import { Design } from '@revenge-mod/discord/design'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withName, withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
-import { lookupGeneratedIconComponent } from '@revenge-mod/utils/discord'
+import { ActionSheetActionCreators } from '@valenced/discord/actions'
+import { Design } from '@valenced/discord/design'
+import { getModules } from '@valenced/modules/finders'
+import { withName, withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
 import { createElement } from 'react'
 import {
 	clearChannelLogs,

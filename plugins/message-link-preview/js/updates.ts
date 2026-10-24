@@ -1,9 +1,9 @@
-import { Dispatcher } from '@revenge-mod/discord/common/flux'
+import { Dispatcher } from '@valenced/discord/common/flux'
 import { deleteRecord, getFetchedRecord, isLinked, storeRecord } from './cache'
 import { AuthenticationStore, ChannelStore, Modules } from './discord'
 import { takeArrived } from './members'
 import { refresh } from './previews'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 
 type Payload = DiscordModules.Flux.DispatcherPayload
 

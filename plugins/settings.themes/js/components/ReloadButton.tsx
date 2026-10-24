@@ -1,5 +1,5 @@
-import { Design } from '@revenge-mod/discord/design'
-import { reloadApp } from '@revenge-mod/modules/native/app'
+import { Design } from '@valenced/discord/design'
+import { reloadApp } from '@valenced/modules/native/app'
 import { useReloadNeeded } from '../utils/reload'
 
 const { Button } = Design

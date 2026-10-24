@@ -1,10 +1,10 @@
 import {
 	onSettingsModulesLoaded,
 	refreshSettings,
-} from '@revenge-mod/discord/modules/settings'
+} from '@valenced/discord/modules/settings'
 import * as dt from './devtools'
 import * as rdt from './react-devtools'
-import type { PluginApi } from '@revenge-mod/plugins/types'
+import type { PluginApi } from '@valenced/plugins/types'
 
 interface Storage {
 	devTools: DevToolsSettings & { alias?: string }

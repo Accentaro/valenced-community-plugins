@@ -1,9 +1,9 @@
-import Page from '@revenge-mod/components/Page'
-import TableRowAssetIcon from '@revenge-mod/components/TableRowAssetIcon'
-import { Design } from '@revenge-mod/discord/design'
+import Page from '@valenced/components/Page'
+import TableRowAssetIcon from '@valenced/components/TableRowAssetIcon'
+import { Design } from '@valenced/discord/design'
 import { ScrollView } from 'react-native'
 import { DefaultSettings, MaxReactionsLimit } from './shared'
-import type { PluginSettingsComponent } from '@revenge-mod/plugins/types'
+import type { PluginSettingsComponent } from '@valenced/plugins/types'
 import type { ComponentProps } from 'react'
 import type { Settings } from './shared'
 

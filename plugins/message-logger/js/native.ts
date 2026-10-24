@@ -1,4 +1,4 @@
-import { callNativeMethodSync } from '@revenge-mod/modules/native'
+import { callNativeMethodSync } from '@valenced/modules/native'
 
 // Attachment IDs and message IDs (for their avatars) native greys out
 const dimmed = new Set<string>()
@@ -20,7 +20,7 @@ export function clearDimmed() {
 	callNativeMethodSync('palmdevs.message-logger.clear', [])
 }
 
-declare module '@revenge-mod/modules/native' {
+declare module '@valenced/modules/native' {
 	interface NativeMethods {
 		'palmdevs.message-logger.setDimmed': [[json: string, dim: boolean], null]
 		'palmdevs.message-logger.clear': [[], null]

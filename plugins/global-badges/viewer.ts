@@ -1,9 +1,9 @@
-import { getStore } from '@revenge-mod/discord/flux'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
+import { getStore } from '@valenced/discord/flux'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
 import { isCustomBadgeId, isRecord, orderBadges } from './badges'
-import type { PluginApi } from '@revenge-mod/plugins/types'
+import type { PluginApi } from '@valenced/plugins/types'
 import type { createBadgeStore, Settings } from './badges'
 
 type BadgeDirectory = {

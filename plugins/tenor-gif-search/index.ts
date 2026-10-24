@@ -1,9 +1,9 @@
-import { getModules } from '@revenge-mod/modules/finders'
-import { withProps } from '@revenge-mod/modules/finders/filters'
-import { instead } from '@revenge-mod/patcher'
+import { getModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
+import { instead } from '@valenced/patcher'
 import SettingsComponent from './settings'
-import type { DiscordModules } from '@revenge-mod/discord/types'
-import type { JsonStorage } from '@revenge-mod/json-storage'
+import type { DiscordModules } from '@valenced/discord/types'
+import type { JsonStorage } from '@valenced/json-storage'
 
 /** Tenor API v1 key Discord used before it moved to its own GIF provider. */
 const TenorKey = '3Z0688EVWYKH'

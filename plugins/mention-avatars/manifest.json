@@ -5,10 +5,10 @@
 	"description": "Avatars in user mentions, role icons in role mentions, and group icons in group DM links.",
 	"author": "Palm <629368283354628116> (https://github.com/sponsors/PalmDevs \"Donations\") (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "AtIcon",
-	"version": "1.0.4",
+	"version": "1.0.0",
 	"dependencies": {
-		"revenge.api": {
-			"version": ">=1.2.1 <2"
+		"valenced.api": {
+			"version": ">=1 <2"
 		},
 		"discord": {
 			"version": ">=352.2"
@@ -18,7 +18,7 @@
 		"script": "index.js",
 		"android": {
 			"path": "plugin.jar",
-			"class": "me.palmdevs.revenge.mentionavatars.MentionAvatars"
+			"class": "me.palmdevs.valenced.mentionavatars.MentionAvatars"
 		}
 	}
 }

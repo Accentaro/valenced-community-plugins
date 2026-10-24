@@ -1,12 +1,12 @@
-import { Tokens } from '@revenge-mod/discord/common/tokens'
-import { Stores } from '@revenge-mod/discord/flux'
-import { getModules } from '@revenge-mod/modules/finders'
-import { withName } from '@revenge-mod/modules/finders/filters'
-import { after } from '@revenge-mod/patcher'
-import { getErrorStack } from '@revenge-mod/utils/error'
+import { Tokens } from '@valenced/discord/common/tokens'
+import { Stores } from '@valenced/discord/flux'
+import { getModules } from '@valenced/modules/finders'
+import { withName } from '@valenced/modules/finders/filters'
+import { after } from '@valenced/patcher'
+import { getErrorStack } from '@valenced/utils/error'
 import { processColor } from 'react-native'
 import { clearTimeoutEnds, putTimeoutEnds, setTimeoutColors } from './native'
-import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { DiscordModules } from '@valenced/discord/types'
 
 interface RowManager {
 	prototype: {
