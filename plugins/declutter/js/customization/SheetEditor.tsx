@@ -1,5 +1,6 @@
 import { getAssetIdByName } from '@valenced/assets'
 import { Design } from '@valenced/discord/design'
+import { lookupGeneratedIconComponent } from '@valenced/utils/discord'
 import {
 	Children,
 	cloneElement,
@@ -7,7 +8,7 @@ import {
 	useMemo,
 	useState,
 } from 'react'
-import { useWindowDimensions, View } from 'react-native'
+import { View } from 'react-native'
 import { DEFAULTS as defaults } from '../defaults'
 import { SectionEditor } from './SectionEditor'
 import {
@@ -22,6 +23,7 @@ import type {
 	ReactElement,
 	ReactNode,
 } from 'react'
+import type { PressableProps } from 'react-native'
 import type { DeclutterSettings as Settings } from '../types'
 import type { SurfacePreferences } from './surfacePreferences'
 import type { SurfaceDefinition, SurfaceRowProps } from './surfaces'
@@ -208,6 +210,85 @@ export function EditorToolbar({
 	)
 }
 
+type ReactionHeaderElement = ReactElement<
+	Record<string, unknown>,
+	(props: Record<string, unknown>) => ReactNode
+>
+
+function ReactionSettingsButton({
+	picker,
+	disabled,
+	onPress,
+}: {
+	picker: ReactionHeaderElement
+	disabled: boolean
+	onPress(): void
+}) {
+	const SettingsIcon = useMemo(
+		() => lookupGeneratedIconComponent('SettingsIcon'),
+		[],
+	)
+	const button = picker.type({ ...picker.props, onPress })
+	if (
+		!isValidElement<PressableProps>(button) ||
+		!isValidElement<ComponentProps<NonNullable<typeof SettingsIcon>>>(
+			button.props.children,
+		) ||
+		!SettingsIcon
+	)
+		throw new Error('Reaction button changed; customisation was skipped')
+	return cloneElement(button, {
+		disabled,
+		onPress,
+		accessibilityLabel: 'Customise message actions',
+		children: <SettingsIcon {...button.props.children.props} />,
+	})
+}
+
+function ReactionHeader({
+	header,
+	disabled,
+	onPress,
+}: {
+	header: ReactionHeaderElement
+	disabled: boolean
+	onPress(): void
+}) {
+	const tree = header.type(header.props)
+	if (!isValidElement<{ children?: ReactNode }>(tree))
+		throw new Error('Reaction header changed; customisation was skipped')
+	const children = Children.toArray(tree.props.children)
+	const row = children[0]
+	if (!isValidElement<{ children?: ReactNode }>(row))
+		throw new Error('Reaction row changed; customisation was skipped')
+	const buttons = Children.toArray(row.props.children)
+	const reactionIndex = buttons.findLastIndex(
+		button =>
+			isValidElement(button) &&
+			componentName(button.type) === 'EmojiReactionRowButton',
+	)
+	const reaction = buttons[reactionIndex]
+	const picker = buttons.at(-1)
+	if (
+		!isValidElement(reaction) ||
+		!isValidElement(picker) ||
+		componentName(picker.type) !== 'EmojiPickerRowButton' ||
+		typeof picker.type !== 'function'
+	)
+		throw new Error('Reaction buttons changed; customisation was skipped')
+	buttons.splice(reactionIndex, 1)
+	buttons.push(
+		<ReactionSettingsButton
+			key="declutter-toolbar"
+			picker={picker as ReactionHeaderElement}
+			disabled={disabled}
+			onPress={onPress}
+		/>,
+	)
+	children[0] = cloneElement(row, { children: buttons })
+	return cloneElement(tree, { children })
+}
+
 function EditableSheet({
 	sheet,
 	surface,
@@ -218,11 +299,24 @@ function EditableSheet({
 	api: Api
 }) {
 	const editor = useSurfaceEditor(api, surface.id)
-	const { height } = useWindowDimensions()
 	const { preferences, editing, save } = editor
 	const groups = useMemo(() => readGroups(sheet, surface), [sheet, surface])
 	const headerId = surface.identifyHeader(sheet.props.header)
 	const headerHidden = !!headerId && preferences.hidden.includes(headerId)
+	const inlineToolbar =
+		!editing &&
+		!headerHidden &&
+		headerId === 'reactions' &&
+		isValidElement(sheet.props.header) &&
+		typeof sheet.props.header.type === 'function'
+	const toolbar = (
+		<EditorToolbar
+			key="declutter-toolbar"
+			api={api}
+			surfaceId={surface.id}
+			editor={editor}
+		/>
+	)
 	const header = (
 		<View style={{ flexShrink: 0 }}>
 			<EditorToolbar api={api} surfaceId={surface.id} editor={editor} />
@@ -245,18 +339,6 @@ function EditableSheet({
 					/>
 				</View>
 			) : null}
-			{editing ? (
-				<View
-					pointerEvents="none"
-					accessibilityElementsHidden
-					importantForAccessibility="no-hide-descendants"
-					style={{ opacity: headerHidden ? 0.4 : 1 }}
-				>
-					{sheet.props.header}
-				</View>
-			) : headerHidden ? null : (
-				sheet.props.header
-			)}
 		</View>
 	)
 	const arranged = arrangeSections(
@@ -265,33 +347,45 @@ function EditableSheet({
 		(entry: Entry) => entry.id,
 	)
 	return cloneElement(sheet, {
-		header: editing ? undefined : header,
+		// Preserve the native header's measurement and sheet-specific props.
+		header: headerHidden ? undefined : inlineToolbar ? (
+			<ReactionHeader
+				header={sheet.props.header as ReactionHeaderElement}
+				disabled={!api.jsonStorage.loaded}
+				onPress={() => editor.setEditing(true)}
+			/>
+		) : (
+			sheet.props.header
+		),
 		...(editing && {
 			scrollable: false,
-			handleDisabled: true,
-			startExpanded: true,
 		}),
 		children: editing ? (
 			<SectionEditor
+				inSheet
 				header={header}
 				groups={groups}
 				preferences={preferences}
 				onChange={save}
-				height={height * 0.55}
 			/>
 		) : (
-			arranged.flatMap(group => {
-				const children = group.entries
-					.filter(entry => !entry.id || !preferences.hidden.includes(entry.id))
-					.map(entry =>
-						isValidElement(entry.row)
-							? cloneElement(entry.row, { key: entry.key })
-							: entry.row,
-					)
-				return children.length
-					? [cloneElement(group.element, { key: group.key, children })]
-					: []
-			})
+			[
+				inlineToolbar ? null : toolbar,
+				...arranged.flatMap(group => {
+					const children = group.entries
+						.filter(
+							entry => !entry.id || !preferences.hidden.includes(entry.id),
+						)
+						.map(entry =>
+							isValidElement(entry.row)
+								? cloneElement(entry.row, { key: entry.key })
+								: entry.row,
+						)
+					return children.length
+						? [cloneElement(group.element, { key: group.key, children })]
+						: []
+				}),
+			]
 		),
 	})
 }
