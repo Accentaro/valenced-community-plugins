@@ -3,7 +3,7 @@ import SearchInput from '@valenced/components/SearchInput'
 import { Design } from '@valenced/discord/design'
 import { ReactNativeSafeAreaContext } from '@valenced/externals/react-native-safe-area-context'
 import { FlashList as Shopify } from '@valenced/externals/shopify'
-import { lookupModule } from '@valenced/modules/finders'
+import { getModules, lookupModule } from '@valenced/modules/finders'
 import {
 	withDependencies,
 	withName,
@@ -71,6 +71,7 @@ export function createServerDrawer(
 		GuildStore,
 		PrivateChannelSortStore,
 		ReadStateStore,
+		RelationshipStore,
 		rawColors,
 		SelectedChannelStore,
 		SelectedGuildStore,
@@ -558,12 +559,18 @@ export function createServerDrawer(
 		// every dispatch any of them make. Fingerprint the state the dock actually displays and
 		// reuse the cached tree while it is unchanged, so useStateFromStores keeps seeing one
 		// reference and unrelated traffic stops re-rendering every dock item.
+		const preferNicknames = () =>
+			(jsonStorage.cache ?? DefaultSettings).preferFriendNicknames ?? true
+
+		const displayName = (id: string, user: t.NativeUser) =>
+			(preferNicknames() && RelationshipStore.getNickname(id)) ||
+			user.globalName ||
+			user.username
+
 		const userKey = (id: string) => {
 			const user = UserStore.getUser(id)
 
-			return user
-				? `${id}.${user.avatar ?? ''}.${user.globalName || user.username}`
-				: id
+			return user ? `${id}.${user.avatar ?? ''}.${displayName(id, user)}` : id
 		}
 
 		const guildKey = (id: string) => {
@@ -624,9 +631,12 @@ export function createServerDrawer(
 					const channel = privateChannel(id)
 					if (!channel) return []
 
-					const users: t.NativeUser[] = (channel.recipients ?? [])
-						.map((recipient: string) => UserStore.getUser(recipient))
-						.filter((user: t.NativeUser | undefined) => user !== undefined)
+					const recipients: string[] = (channel.recipients ?? []).filter(
+						(recipient: string) => UserStore.getUser(recipient) !== undefined,
+					)
+					const users = recipients.map(
+						recipient => UserStore.getUser(recipient)!,
+					)
 					const avatarUri =
 						channel.type === 1
 							? users[0]?.getAvatarURL?.(undefined, 128, false)
@@ -652,7 +662,7 @@ export function createServerDrawer(
 							name:
 								channel.name ||
 								users
-									.map(user => user.globalName || user.username)
+									.map((user, index) => displayName(recipients[index]!, user))
 									.join(', ') ||
 								'Direct Message',
 						},
@@ -841,21 +851,32 @@ export function createServerDrawer(
 	}
 
 	function createGuildMenu(signal: AbortSignal, folder = false) {
-		const getItems = folder
-			? lookupModule(
-					withProps<{
-						getGuildFolderMenuItems(id: string | number): t.MenuItem[]
-					}>('getGuildFolderMenuItems').and(
-						withStoreDependencies('SortedGuildStore'),
-					),
-				)[0]?.getGuildFolderMenuItems
-			: lookupModule(
-					withName<(id: string | number) => t.MenuItem[]>(
-						'getGuildsBarGuildMenuItems',
-					),
-				)[0]
-		if (typeof getItems !== 'function')
-			throw new Error('ServerDrawer: native guild menu is unavailable')
+		type GetItems = (id: string | number) => t.MenuItem[]
+		let getItems: GetItems | undefined
+		const listeners = new Set<() => void>()
+		if (folder) {
+			getItems = lookupModule(
+				withProps<{ getGuildFolderMenuItems: GetItems }>(
+					'getGuildFolderMenuItems',
+				).and(withStoreDependencies('SortedGuildStore')),
+			)[0]?.getGuildFolderMenuItems
+			if (typeof getItems !== 'function')
+				throw new Error('ServerDrawer: native folder menu is unavailable')
+		} else {
+			// Discord loads the guild menu builder with its native GuildsBar, which can render after the drawer.
+			const unsubscribe = getModules(
+				withName<GetItems>('getGuildsBarGuildMenuItems'),
+				items => {
+					getItems = items
+					for (const listener of listeners) listener()
+				},
+			)
+			signal.addEventListener('abort', unsubscribe)
+		}
+		const subscribe = (listener: () => void) => {
+			listeners.add(listener)
+			return () => listeners.delete(listener)
+		}
 
 		const wrap = (item: t.MenuItem): t.MenuItem => ({
 			...item,
@@ -868,7 +889,11 @@ export function createServerDrawer(
 			},
 		})
 
-		return function GuildMenu({ guild, children }: t.GuildMenuProps) {
+		function NativeGuildMenu({
+			guild,
+			children,
+			getItems,
+		}: t.GuildMenuProps & { getItems: GetItems }) {
 			// Discord stores folder IDs as numbers; guild snowflakes remain strings.
 			const id = folder ? Number(guild.id) : guild.id
 
@@ -911,6 +936,15 @@ export function createServerDrawer(
 				>
 					{children}
 				</ContextMenu>
+			)
+		}
+
+		return function GuildMenu(props: t.GuildMenuProps) {
+			const items = useSyncExternalStore(subscribe, () => getItems)
+			return items ? (
+				<NativeGuildMenu {...props} getItems={items} />
+			) : (
+				props.children()
 			)
 		}
 	}
@@ -1567,7 +1601,16 @@ export function createServerDrawer(
 			const [softDockGestures] = useState(
 				() => stored.softDockGestures ?? false,
 			)
-			const layout: t.DrawerLayout = stored.layout === 'list' ? 'list' : 'grid'
+			const serverLayout: t.DrawerLayout =
+				stored.layout === 'list' ? 'list' : 'grid'
+			const layouts: Record<t.DrawerView, t.DrawerLayout> = {
+				servers: serverLayout,
+				dms:
+					stored.dmLayout === 'list' || stored.dmLayout === 'grid'
+						? stored.dmLayout
+						: serverLayout,
+			}
+			const preferFriendNicknames = stored.preferFriendNicknames ?? true
 
 			const snapshot: t.ServerDrawerSnapshot = FluxUtils!.useStateFromStores(
 				[
@@ -1579,9 +1622,11 @@ export function createServerDrawer(
 					SelectedChannelStore,
 					SelectedGuildStore,
 					SortedGuildStore,
+					RelationshipStore,
 					UserStore,
 				],
 				() => (signal.aborted ? EMPTY_SNAPSHOT : controller.snapshot()),
+				[preferFriendNicknames],
 			)
 
 			const directMessages = useMemo(
@@ -1603,7 +1648,7 @@ export function createServerDrawer(
 
 			return {
 				...snapshot,
-				layout,
+				layouts,
 				directMessages,
 				directMessageBadge,
 				pullToMarkRead: stored.pullToMarkRead,
@@ -2195,11 +2240,10 @@ export function createServerDrawer(
 				columns,
 				columnStep,
 				previewWidth,
-				columnOffset,
 			} = getDrawerGeometry(
 				viewportWidth,
 				viewportHeight - bottomInset - useSafeAreaInsets().top,
-				data.layout,
+				data.layouts[view],
 			)
 
 			const carousel = useCarouselMotion(
@@ -2269,7 +2313,7 @@ export function createServerDrawer(
 						view === 'servers' && folderId ? `folder:${folderId}` : view
 					] ?? 0) <= 0,
 				)
-			}, [view, filter, folderId, data.layout, query])
+			}, [view, filter, folderId, data.layouts[view], query])
 
 			// Discord owns focus, current-callback tracking and subscription cleanup.
 			useNavigatorBackPressHandler(() => {
@@ -2333,6 +2377,7 @@ export function createServerDrawer(
 				compactSize,
 				items,
 				animate,
+				layout,
 			}: t.DrawerCellProps) => {
 				const render = (menu?: t.NativeMenuAnchor) => {
 					const showFocus = (bounds: Native.LayoutRectangle) => {
@@ -2345,7 +2390,7 @@ export function createServerDrawer(
 								item,
 								compactSize,
 								bounds: { ...bounds, x: bounds.x - x, y: bounds.y - y },
-								layout: inFolder ? 'grid' : data.layout,
+								layout: inFolder ? 'grid' : layout,
 							})
 							menu.onLongPress?.()
 							if (data.haptics) lightImpact()
@@ -2357,7 +2402,7 @@ export function createServerDrawer(
 							menu={menu}
 							animate={animate}
 							compactSize={compactSize}
-							layout={inFolder ? 'grid' : data.layout}
+							layout={inFolder ? 'grid' : layout}
 							dragging={active?.source.id === item.id}
 							feedback={compactSize ? undefined : drag.feedback}
 							selectedId={
@@ -2403,7 +2448,7 @@ export function createServerDrawer(
 									{
 										columns: inFolder ? 3 : columns,
 										columnStep: inFolder ? ITEM_WIDTH + 8 : columnStep,
-										layout: inFolder ? 'grid' : data.layout,
+										layout: inFolder ? 'grid' : layout,
 										rowStep: inFolder ? 90 : grid ? 82 + ITEM_GAP : 72,
 									},
 									menu?.onLongPress,
@@ -2456,7 +2501,7 @@ export function createServerDrawer(
 							((expanded && page === view) || !!folderOverlayId) &&
 							foreground
 						}
-						layout={data.layout}
+						layout={data.layouts[page]}
 						width={viewportWidth}
 						selected={
 							item.id ===
@@ -2477,6 +2522,12 @@ export function createServerDrawer(
 
 			const renderPage = (page: t.DrawerView) => {
 				const servers = page === 'servers'
+				// Each page keeps its own layout; drag geometry above follows the visible page.
+				const { grid, columns, columnOffset } = getDrawerGeometry(
+					viewportWidth,
+					viewportHeight,
+					data.layouts[page],
+				)
 				const viewLabel = servers ? 'servers' : 'direct messages'
 				const folders =
 					servers && retainedFolder ? [undefined, retainedFolder] : [undefined]
@@ -2556,7 +2607,7 @@ export function createServerDrawer(
 												paddingHorizontal: grid ? SIDE_PADDING : 10,
 												paddingTop: grid ? 14 : 10,
 											}}
-											key={`${page}-${data.layout}-${columns}`}
+											key={`${page}-${data.layouts[page]}-${columns}`}
 											maintainVisibleContentPosition={{ disabled: true }}
 											getItemType={(item: t.DrawerItem) => item.kind ?? 'dm'}
 											keyExtractor={(item: t.DrawerItem) =>
@@ -2878,9 +2929,15 @@ export function createServerDrawer(
 													<Icon
 														label={`Switch to ${grid ? 'list' : 'grid'} view`}
 														onPress={() =>
-															jsonStorage.set({
-																layout: grid ? 'list' : 'grid',
-															})
+															jsonStorage.set(
+																view === 'dms'
+																	? { dmLayout: grid ? 'list' : 'grid' }
+																	: {
+																			layout: grid ? 'list' : 'grid',
+																			// Pin the DM layout, which otherwise falls back to this one.
+																			dmLayout: data.layouts.dms,
+																		},
+															)
 														}
 														name={grid ? 'ListViewIcon' : 'GridSquareIcon'}
 														color={TEXT_MUTED}
@@ -2976,7 +3033,7 @@ export function createServerDrawer(
 						>
 							<Item
 								item={active.source}
-								layout={data.layout}
+								layout={data.layouts[view]}
 								previewWidth={previewWidth}
 								animate={false}
 							/>

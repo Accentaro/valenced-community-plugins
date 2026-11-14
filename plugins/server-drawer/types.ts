@@ -49,7 +49,11 @@ export interface ServerDrawerPreferences {
 		offsets: Record<string, number>
 	}
 	readonly dmOrder: readonly string[]
+	/** Server page layout. */
 	readonly layout: DrawerLayout
+	/** Direct message page layout; falls back to `layout`. */
+	readonly dmLayout?: DrawerLayout
+	readonly preferFriendNicknames: boolean
 	readonly pullToMarkRead: boolean
 	readonly softDockGestures: boolean
 	readonly haptics: boolean
@@ -188,7 +192,7 @@ export type NativeMenuAnchor = Parameters<
 
 export interface GuildMenuProps {
 	guild: DrawerNode
-	children(props: NativeMenuAnchor): ReactNode
+	children(props?: NativeMenuAnchor): ReactNode
 }
 
 export interface DragFeedback {
